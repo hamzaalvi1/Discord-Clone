@@ -3,7 +3,12 @@ const HomePage = () => {
   return (
     <main>
       Hello HomePage
-      <InputField type="text" name="hello" value={""} placeholder="hello" />
+      <InputField
+        type="text"
+        name="hello"
+        placeholder="hello"
+        isCustomInput={true}
+      />
     </main>
   );
 };

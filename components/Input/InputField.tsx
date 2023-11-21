@@ -1,6 +1,6 @@
 "use client";
-import { InputFieldProps } from "./InputFieldType";
-import { InputProps } from "@chakra-ui/react";
+import { Controller, useForm } from "react-hook-form";
+import { InputFieldProps, FormData } from "./InputFieldType";
 import {
   FormControl,
   FormLabel,
@@ -17,32 +17,26 @@ import {
   defaultInputStyles,
 } from "./styles";
 
-const InputField = (props: InputFieldProps & InputProps) => {
+const InputField = (props: InputFieldProps) => {
   const {
-    value,
-    label = false,
+    name,
+    type = "text",
     labelText,
-    labelStyles,
     styleProps,
-    inputStyles,
-    type,
     placeholder,
-    onChange,
-    onBlur,
-    errorText,
-    errorTextStyle,
-    error = false,
     helperText,
-    isHelper = false,
     isDisabled = false,
     isReadOnly = false,
     variant,
     InputRightElements,
     InputLeftElements,
     isCustomInput = false,
-    name,
-    ...rest
   } = props;
+
+  const {
+    control,
+    formState: { errors },
+  } = useForm<FormData>();
 
   return isCustomInput ? (
     <InputGroup sx={{ ...formControlStyles, ...styleProps }}>
@@ -51,17 +45,21 @@ const InputField = (props: InputFieldProps & InputProps) => {
           <InputLeftElements />
         </InputLeftElement>
       )}
-      <ChakraInput
-        type={type}
-        onChange={onChange}
-        value={value}
-        variant={variant}
-        placeholder={placeholder}
+      <Controller
         name={name}
-        sx={{ ...defaultInputStyles, ...inputStyles }}
-        {...rest}
-        border={"1px solid"}
-        borderColor={"lightGrey"}
+        control={control}
+        render={({ field }) => (
+          <ChakraInput
+            {...field}
+            type={type}
+            id={name}
+            variant={variant}
+            placeholder={placeholder}
+            sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
+            border={"1px solid"}
+            borderColor={"lightGrey"}
+          />
+        )}
       />
       {InputRightElements && (
         <InputRightElement>
@@ -72,32 +70,42 @@ const InputField = (props: InputFieldProps & InputProps) => {
   ) : (
     <FormControl
       sx={{ ...formControlStyles, ...styleProps }}
-      isInvalid={error}
+      isInvalid={!!errors[name]}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
     >
-      {label && (
+      {labelText && (
         <FormLabel
-          sx={{ ...defaultLabelStyles, defaultInputStyles, ...labelStyles }}
+          sx={{
+            ...defaultLabelStyles,
+            defaultInputStyles,
+            ...styleProps?.labelStyles,
+          }}
         >
           {labelText}
         </FormLabel>
       )}
-      <ChakraInput
+      <Controller
         name={name}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        sx={{ ...defaultInputStyles, ...inputStyles }}
-        onChange={onChange}
-        onBlur={onBlur}
-        border={"1px solid"}
-        borderColor={"lightGrey"}
-        {...rest}
+        control={control}
+        render={({ field }) => (
+          <ChakraInput
+            {...field}
+            type={type}
+            id={name}
+            variant={variant}
+            placeholder={placeholder}
+            sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
+            border={"1px solid"}
+            borderColor={"lightGrey"}
+          />
+        )}
       />
-      {isHelper && <FormHelperText>{helperText}</FormHelperText>}
-      {error && (
-        <FormErrorMessage sx={errorTextStyle}>{errorText}</FormErrorMessage>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {errors[name] && (
+        <FormErrorMessage sx={styleProps?.errorTextStyle}>
+          {errors[name] && errors[name]?.message}
+        </FormErrorMessage>
       )}
     </FormControl>
   );
