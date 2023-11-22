@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import { Heading } from "./components";
 
 const colors = {
   primaryColor: "#5865F2",
@@ -34,8 +35,12 @@ const fontSizes = {
   "9xl": "8rem",
 };
 
+const components = {
+  Heading,
+};
 export const theme = extendTheme({
   colors,
   fontWeights,
   fontSizes,
+  components,
 });

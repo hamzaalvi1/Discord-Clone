@@ -9,6 +9,7 @@ export const layoutStyles: CSSProperties = {
   backgroundImage: "url('/images/loginbg.jpg')",
   backgroundSize: "cover",
   zIndex: "0",
+  
 };
 
 export const overlayStyles: CSSProperties = {
@@ -18,6 +19,7 @@ export const overlayStyles: CSSProperties = {
   width: "100%",
   height: "100vh",
   background: "#000",
-  opacity: "0.3",
+  opacity: "0.15",
   zIndex: "-1",
 };
+
