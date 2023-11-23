@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { OpenSans } from "@/components/Fonts";
 import { Providers } from "@/components/Providers";
 import "./styles/globals.css";
-
-const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={OpenSans.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

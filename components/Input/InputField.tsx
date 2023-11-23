@@ -1,5 +1,5 @@
 "use client";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { InputFieldProps, FormData } from "./InputFieldType";
 import {
   FormControl,
@@ -19,8 +19,10 @@ import {
 
 const InputField = (props: InputFieldProps) => {
   const {
+    errors,
     name,
     type = "text",
+    control,
     labelText,
     styleProps,
     placeholder,
@@ -32,11 +34,6 @@ const InputField = (props: InputFieldProps) => {
     InputLeftElements,
     isCustomInput = false,
   } = props;
-
-  const {
-    control,
-    formState: { errors },
-  } = useForm<FormData>();
 
   return isCustomInput ? (
     <InputGroup sx={{ ...formControlStyles, ...styleProps }}>
@@ -102,9 +99,9 @@ const InputField = (props: InputFieldProps) => {
         )}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {errors[name] && (
+      {errors && errors[name] && (
         <FormErrorMessage sx={styleProps?.errorTextStyle}>
-          {errors[name] && errors[name]?.message}
+          {errors && errors[name]?.message}
         </FormErrorMessage>
       )}
     </FormControl>
