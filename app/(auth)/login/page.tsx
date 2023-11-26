@@ -1,5 +1,5 @@
-import { LoginForm } from "@/components/Auth";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { LoginForm, OAuthLogin } from "@/components/Auth";
+import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import {
   loginCardStyles,
   loginHeadingStyles,
@@ -9,7 +9,7 @@ import {
 const LoginPage = () => {
   return (
     <Box as="div" sx={loginCardStyles}>
-      <Box as={"div"} sx={loginLeftWrapper}>
+      <Flex as={"div"} sx={loginLeftWrapper}>
         <Heading as={"h2"} sx={loginHeadingStyles}>
           Welcome Back!
         </Heading>
@@ -17,7 +17,10 @@ const LoginPage = () => {
           We are are so excited to see you again!
         </Text>
         <LoginForm />
-      </Box>
+      </Flex>
+      <Flex as={"div"} sx={loginLeftWrapper}>
+        <OAuthLogin />
+      </Flex>
     </Box>
   );
 };

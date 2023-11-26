@@ -1,7 +1,9 @@
 "use client";
+import { Button } from "../Button";
 import { InputField } from "../Input";
-import { Box } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { Box, Text } from "@chakra-ui/react";
 import { loginSchema } from "./ValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -11,6 +13,7 @@ type loginForm = {
 };
 
 const LoginForm = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -19,24 +22,44 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   return (
-    <Box as="div">
+    <Box as="div" marginBlock={"10px"}>
       <form onSubmit={handleSubmit((d) => console.log(d))}>
         <InputField
-          errors={errors}
           control={control}
+          error={errors["email"]?.message}
           name="email"
           type="email"
           labelText="Email Address *"
         />
         <InputField
-          errors={errors}
           control={control}
+          error={errors["password"]?.message}
           name="password"
           type="password"
           labelText="Password *"
         />
-        <button type="submit">Submit</button>
+        <Text
+          as={"p"}
+          fontSize={"13px"}
+          color={"blue.500"}
+          cursor={"pointer"}
+          fontWeight={"medium"}
+        >
+          Forgot your password?
+        </Text>
+        <Button title="Login" type="submit" loading={false} mb={"5px"} />
       </form>
+      <Text as="p" fontSize={"13px"} color={"lightGrey"} fontWeight={"medium"}>
+        Need an Account?{" "}
+        <Text
+          as="span"
+          color={"blue.500"}
+          cursor={"pointer"}
+          onClick={() => router.push("/register")}
+        >
+          Register
+        </Text>
+      </Text>
     </Box>
   );
 };

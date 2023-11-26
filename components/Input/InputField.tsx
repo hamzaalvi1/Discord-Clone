@@ -1,6 +1,6 @@
 "use client";
+import { CSSProperties } from "react";
 import { Controller } from "react-hook-form";
-import { InputFieldProps, FormData } from "./InputFieldType";
 import {
   FormControl,
   FormLabel,
@@ -15,14 +15,36 @@ import {
   formControlStyles,
   defaultLabelStyles,
   defaultInputStyles,
+  defaultErrorStyles,
 } from "./styles";
 
-const InputField = (props: InputFieldProps) => {
+interface InputFieldProps {
+  name: string;
+  type: string;
+  control: any;
+  variant?: string;
+  labelText?: string;
+  helperText?: string;
+  placeholder?: string;
+  isDisabled?: boolean;
+  isReadOnly?: boolean;
+  isCustomInput?: boolean;
+  styleProps?: {
+    labelStyles?: CSSProperties;
+    inputStyles?: CSSProperties;
+    errorTextStyle?: CSSProperties;
+  };
+  error?: string | undefined;
+  InputLeftElements?: React.ElementType;
+  InputRightElements?: React.ElementType;
+}
+
+const InputField: React.FC<InputFieldProps> = (props) => {
   const {
-    errors,
+    error,
     name,
-    type = "text",
     control,
+    type = "text",
     labelText,
     styleProps,
     placeholder,
@@ -45,6 +67,7 @@ const InputField = (props: InputFieldProps) => {
       <Controller
         name={name}
         control={control}
+        defaultValue={""}
         render={({ field }) => (
           <ChakraInput
             {...field}
@@ -53,11 +76,10 @@ const InputField = (props: InputFieldProps) => {
             variant={variant}
             placeholder={placeholder}
             sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
-            border={"1px solid"}
-            borderColor={"lightGrey"}
           />
         )}
       />
+
       {InputRightElements && (
         <InputRightElement>
           <InputRightElements />
@@ -67,7 +89,7 @@ const InputField = (props: InputFieldProps) => {
   ) : (
     <FormControl
       sx={{ ...formControlStyles, ...styleProps }}
-      isInvalid={!!errors[name]}
+      isInvalid={!!error}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
     >
@@ -85,6 +107,7 @@ const InputField = (props: InputFieldProps) => {
       <Controller
         name={name}
         control={control}
+        defaultValue={""}
         render={({ field }) => (
           <ChakraInput
             {...field}
@@ -93,15 +116,16 @@ const InputField = (props: InputFieldProps) => {
             variant={variant}
             placeholder={placeholder}
             sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
-            border={"1px solid"}
-            borderColor={"lightGrey"}
           />
         )}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {errors && errors[name] && (
-        <FormErrorMessage sx={styleProps?.errorTextStyle}>
-          {errors && errors[name]?.message}
+      {error && (
+        <FormErrorMessage
+          as="span"
+          sx={{ ...styleProps?.errorTextStyle, ...defaultErrorStyles }}
+        >
+          {error}
         </FormErrorMessage>
       )}
     </FormControl>

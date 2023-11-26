@@ -1,14 +1,15 @@
 import { extendTheme } from "@chakra-ui/react";
 import { OpenSans } from "@/components/Fonts";
-import { Heading } from "./components";
+import { Heading, Button } from "./components";
 
 const colors = {
-  primaryColor: "#5865F2",
+  primaryColor: "#FF385C",
   secondaryColor: "#313338",
   blackColor: "#1E1F22",
   lightGrey: "#9ea0a3",
   darkGrey: "#82868c",
-  white: "#fff"
+  white: "#fff",
+  error: "#E00B41",
 };
 
 const fontWeights = {
@@ -40,6 +41,7 @@ const fonts = {
 
 const components = {
   Heading,
+  Button
 };
 export const theme = extendTheme({
   colors,
