@@ -1,6 +1,7 @@
 import { CSSProperties } from "react";
+import { CSSObject } from "@emotion/react";
 
-export const loginCardStyles: CSSProperties = {
+export const loginCardStyles: CSSObject = {
   background: "secondaryColor",
   width: "700px",
   height: "425px",
@@ -9,6 +10,12 @@ export const loginCardStyles: CSSProperties = {
   padding: "15px",
   display: "grid",
   gridTemplateColumns: "60% 40%",
+  "@media screen and (max-width:575px)": {
+    gridTemplateColumns: "100%",
+    gridAutoColumns: "minmax(100px, auto)",
+    height: "auto",
+    margin: "5px",
+  },
 };
 
 export const loginHeadingStyles: CSSProperties = {
@@ -27,8 +34,11 @@ export const loginParaStyles: CSSProperties = {
   padding: "5px 0 10px",
 };
 
-export const loginLeftWrapper: CSSProperties = {
+export const loginLeftWrapper: CSSObject = {
   padding: "10px",
   flexFlow: "column",
   justifyContent: "center",
+  "@media screen and (max-width:575px)": {
+    padding: 0,
+  },
 };

@@ -22,7 +22,7 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   return (
-    <Box as="div" marginBlock={"10px"}>
+    <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
       <form onSubmit={handleSubmit((d) => console.log(d))}>
         <InputField
           control={control}
@@ -47,7 +47,12 @@ const LoginForm = () => {
         >
           Forgot your password?
         </Text>
-        <Button title="Login" type="submit" loading={false} mb={"5px"} />
+        <Button
+          title="Login"
+          type="submit"
+          loading={false}
+          margin={{ base: "10px 0", sm: "15px 0" }}
+        />
       </form>
       <Text as="p" fontSize={"13px"} color={"lightGrey"} fontWeight={"medium"}>
         Need an Account?{" "}

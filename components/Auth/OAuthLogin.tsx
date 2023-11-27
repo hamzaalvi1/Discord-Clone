@@ -12,8 +12,9 @@ const OAuthLogin = () => {
       <Text
         textAlign={"center"}
         color={"lightGrey"}
-        marginBottom={"10px"}
         fontWeight={"medium"}
+        mb={{ base: "0", sm: "5px" }}
+
       >
         OR
       </Text>

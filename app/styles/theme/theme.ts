@@ -39,13 +39,23 @@ const fonts = {
   open_sans: OpenSans.style.fontFamily,
 };
 
+const breakpoints = {
+  base: "0",
+  sm: "575px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1366px",
+  "2xl": "1600px",
+};
+
 const components = {
   Heading,
-  Button
+  Button,
 };
 export const theme = extendTheme({
   colors,
   fonts,
+  breakpoints,
   fontWeights,
   fontSizes,
   components,
