@@ -1,3 +1,4 @@
 import LoginForm from "./LoginForm";
 import OAuthLogin from "./OAuthLogin";
-export { LoginForm, OAuthLogin };
+import RegisterForm from "./RegisterForm";
+export { LoginForm, OAuthLogin, RegisterForm };

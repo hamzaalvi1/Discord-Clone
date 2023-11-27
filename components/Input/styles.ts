@@ -26,7 +26,8 @@ export const defaultInputStyles: CSSObject = {
   border: "none",
   borderRadius: "sm",
   "&::placeholder": {
-    fontSize: "md",
+    fontSize: "xs",
+    color: "lightGrey",
   },
   "&:focus-visible": {
     boxShadow: "0 0 0 1px #1E1F22",

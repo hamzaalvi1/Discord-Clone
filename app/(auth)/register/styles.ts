@@ -4,12 +4,17 @@ import { CSSObject } from "@emotion/react";
 export const registerCardStyles: CSSObject = {
   background: "secondaryColor",
   width: "450px",
-  height: "850px",
+  height: "calc(100vh - 20%)",
   boxShadow: "md",
   borderRadius: "md",
   padding: "15px",
   display: "flex",
   flexFlow: "column",
+  justifyContent: "center",
+  "@media screen and (max-width:575px)": {
+    height: "auto",
+    margin: " 0 10px",
+  },
 };
 
 export const registerHeadingStyles: CSSProperties = {
