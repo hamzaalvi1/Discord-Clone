@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Box, Text } from "@chakra-ui/react";
 import { loginSchema } from "./ValidationSchema";
+import { loginWithCredentials } from "@/app/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type loginForm = {
+export type loginForm = {
   email: string;
   password: string;
 };
@@ -17,13 +18,19 @@ const LoginForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting, isLoading },
   } = useForm<loginForm>({
     resolver: zodResolver(loginSchema),
   });
+  const handleLogin = async (values: loginForm) => {
+    const result = await loginWithCredentials({ values });
+    if (result?.success) {
+      router.push("/");
+    }
+  };
   return (
     <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
-      <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <form onSubmit={handleSubmit(handleLogin)}>
         <InputField
           control={control}
           error={errors["email"]?.message}
@@ -50,7 +57,7 @@ const LoginForm = () => {
         <Button
           title="Login"
           type="submit"
-          loading={false}
+          loading={isSubmitting || isLoading}
           margin={{ base: "10px 0", sm: "15px 0" }}
         />
       </form>

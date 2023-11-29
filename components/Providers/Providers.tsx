@@ -1,6 +1,7 @@
 "use client";
 import { CacheProvider } from "@chakra-ui/next-js";
 import { ChakraProvider } from "@chakra-ui/react";
+import { ToasterProvider } from "../Toaster";
 import { theme } from "@/app/styles/theme";
 
 type ProviderProps = {
@@ -12,7 +13,8 @@ const Providers = (props: ProviderProps) => {
   return (
     <CacheProvider>
       <ChakraProvider resetCSS={true} theme={theme}>
-        {children}
+        <ToasterProvider />
+         {children}
       </ChakraProvider>
     </CacheProvider>
   );
