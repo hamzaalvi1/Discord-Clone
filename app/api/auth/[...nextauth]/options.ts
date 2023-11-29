@@ -26,8 +26,8 @@ export const authOptions: NextAuthOptions = {
         // Docs: https://next-auth.js.org/configuration/providers/credentials
         const user = {
           id: "42",
-          email: "hamzaalvi@gmail.com",
-          password: "nextauth",
+          email: "hamza@h.com",
+          password: "click123",
         };
 
         if (

@@ -57,7 +57,7 @@ const LoginForm = () => {
         <Button
           title="Login"
           type="submit"
-          loading={isSubmitting || isLoading}
+          loading={isSubmitting}
           margin={{ base: "10px 0", sm: "15px 0" }}
         />
       </form>

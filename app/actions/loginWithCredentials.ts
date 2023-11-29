@@ -14,7 +14,6 @@ type CustomError = {
 
 export const loginWithCredentials = async (params: loginCredientialsParams) => {
   const { values } = params;
-  let success = false;
   try {
     const getCredentials = await signIn("credentials", {
       ...values,
