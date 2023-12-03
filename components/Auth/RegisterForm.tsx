@@ -24,6 +24,10 @@ const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  const handleStopOnPaste = (evt: React.ClipboardEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+  };
+
   return (
     <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
       <form onSubmit={handleSubmit((d) => console.log(d))}>
@@ -69,6 +73,7 @@ const RegisterForm = () => {
           name="confirmPassword"
           type="password"
           labelText="Confirm Password *"
+          onPaste={handleStopOnPaste}
           styleProps={{
             inputStyles: {
               marginBottom: errors["confirmPassword"] ? "3px" : "10px ",

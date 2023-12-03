@@ -33,3 +33,13 @@ html {
   border-radius: 10px;
   background-color: #00b5d8;
 }
+
+.chakra-button__spinner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn-primary:hover[disabled] {
+  background: #00b5d8 !important;
+}

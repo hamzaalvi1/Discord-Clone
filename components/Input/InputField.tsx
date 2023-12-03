@@ -1,5 +1,6 @@
 "use client";
 import { CSSProperties } from "react";
+import { InputProps } from "@chakra-ui/react";
 import { Controller } from "react-hook-form";
 import {
   FormControl,
@@ -33,10 +34,12 @@ interface InputFieldProps {
     labelStyles?: CSSProperties;
     inputStyles?: CSSProperties;
     errorTextStyle?: CSSProperties;
+    iconStyles?: CSSProperties;
   };
   error?: string | undefined;
-  InputLeftElements?: React.ElementType;
-  InputRightElements?: React.ElementType;
+  inputLeftElements?: React.ElementType;
+  inputRightElements?: React.ElementType;
+  [key: string]: unknown; // Additional properties can have any name and any type
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -52,41 +55,12 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     isDisabled = false,
     isReadOnly = false,
     variant,
-    InputRightElements,
-    InputLeftElements,
-    isCustomInput = false,
+    inputRightElements: InputRightElements,
+    inputLeftElements: InputLeftElements,
+    ...rest
   } = props;
 
-  return isCustomInput ? (
-    <InputGroup sx={{ ...formControlStyles, ...styleProps }}>
-      {InputLeftElements && (
-        <InputLeftElement>
-          <InputLeftElements />
-        </InputLeftElement>
-      )}
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={""}
-        render={({ field }) => (
-          <ChakraInput
-            {...field}
-            type={type}
-            id={name}
-            variant={variant}
-            placeholder={placeholder}
-            sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
-          />
-        )}
-      />
-
-      {InputRightElements && (
-        <InputRightElement>
-          <InputRightElements />
-        </InputRightElement>
-      )}
-    </InputGroup>
-  ) : (
+  return (
     <FormControl
       sx={{ ...formControlStyles, ...styleProps }}
       isInvalid={!!error}
@@ -104,21 +78,34 @@ const InputField: React.FC<InputFieldProps> = (props) => {
           {labelText}
         </FormLabel>
       )}
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={""}
-        render={({ field }) => (
-          <ChakraInput
-            {...field}
-            type={type}
-            id={name}
-            variant={variant}
-            placeholder={placeholder}
-            sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
-          />
+      <InputGroup>
+        {InputLeftElements && (
+          <InputLeftElement>
+            <InputLeftElements />
+          </InputLeftElement>
         )}
-      />
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={""}
+          render={({ field }) => (
+            <ChakraInput
+              {...field}
+              type={type}
+              id={name}
+              variant={variant}
+              placeholder={placeholder}
+              sx={{ ...defaultInputStyles, ...styleProps?.inputStyles }}
+              {...rest}
+            />
+          )}
+        />
+        {InputRightElements && (
+          <InputRightElement>
+            <InputRightElements style={{ ...styleProps?.iconStyles }} />
+          </InputRightElement>
+        )}
+      </InputGroup>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && (
         <FormErrorMessage
