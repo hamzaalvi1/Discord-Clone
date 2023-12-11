@@ -1,9 +1,12 @@
 "use client";
+import { fetchAPI } from "@/utils";
 import { Button } from "../Button";
 import { InputField } from "../Input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Box, Text } from "@chakra-ui/react";
+import { ApiMethods } from "@/config/constants";
+import { AuthRoutes } from "@/config/api-routes";
 import { registerSchema } from "./ValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -28,9 +31,19 @@ const RegisterForm = () => {
     evt.preventDefault();
   };
 
+  const handleRegisterUser = async (values: registerForm) => {
+    console.log(values, "values");
+    const response = await fetchAPI({
+      method: ApiMethods.POST,
+      url: AuthRoutes.REGISTER,
+      data: values,
+    });
+    console.log(response.data, "response");
+  };
+
   return (
     <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
-      <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <form onSubmit={handleSubmit((values) => handleRegisterUser(values))}>
         <InputField
           control={control}
           error={errors["username"]?.message}
