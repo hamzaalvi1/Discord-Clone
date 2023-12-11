@@ -52,6 +52,10 @@ const components = {
   Heading,
   Button,
 };
+const config = {
+  initialColorMode: "dark",
+  useSystemColorMode: true,
+};
 export const theme = extendTheme({
   colors,
   fonts,
@@ -59,4 +63,5 @@ export const theme = extendTheme({
   fontWeights,
   fontSizes,
   components,
+  config,
 });
