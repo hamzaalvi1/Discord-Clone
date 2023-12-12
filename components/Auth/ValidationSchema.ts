@@ -32,3 +32,5 @@ export const registerSchema = z
     message: "Passwords does not match",
     path: ["confirmPassword"], // path of error
   });
+
+export type RegisterUser = z.infer<typeof registerSchema>;

@@ -7,23 +7,16 @@ import { useRouter } from "next/navigation";
 import { Box, Text } from "@chakra-ui/react";
 import { ApiMethods } from "@/config/constants";
 import { AuthRoutes } from "@/config/api-routes";
-import { registerSchema } from "./ValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type registerForm = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+import { registerSchema, RegisterUser } from "./ValidationSchema";
 
 const RegisterForm = () => {
   const router = useRouter();
   const {
     handleSubmit,
     control,
-    formState: { errors },
-  } = useForm<registerForm>({
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterUser>({
     resolver: zodResolver(registerSchema),
   });
 
@@ -31,14 +24,17 @@ const RegisterForm = () => {
     evt.preventDefault();
   };
 
-  const handleRegisterUser = async (values: registerForm) => {
-    console.log(values, "values");
-    const response = await fetchAPI({
-      method: ApiMethods.POST,
-      url: AuthRoutes.REGISTER,
-      data: values,
-    });
-    console.log(response.data, "response");
+  const handleRegisterUser = async (values: RegisterUser) => {
+    try {
+      const response = await fetchAPI({
+        method: ApiMethods.POST,
+        url: AuthRoutes.REGISTER,
+        data: values,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
   };
 
   return (
@@ -105,7 +101,7 @@ const RegisterForm = () => {
         <Button
           title="Continue"
           type="submit"
-          loading={false}
+          loading={isSubmitting}
           margin={{ base: "5px 0" }}
         />
       </form>

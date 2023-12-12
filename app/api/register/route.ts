@@ -1,6 +1,17 @@
 import { NextResponse, NextRequest } from "next/server";
-import { z } from "zod";
+import { registerSchema } from "@/components/Auth/ValidationSchema";
 
 export const POST = async (request: NextRequest) => {
-  return NextResponse.json({ message: "success" }, { status: 200 });
+  try {
+    const response = await request.json();
+    const parsedData = registerSchema.safeParse(response);
+    console.log(parsedData, "parsedData");
+    return NextResponse.json({ message: "success" }, { status: 200 });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
 };

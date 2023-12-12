@@ -3,6 +3,7 @@ import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
 const authRoutes = ["/login", "/register"];
+const apiPaths = ["/api/register"];
 
 export interface NextRequestWithAuth extends NextRequest {
   nextauth: { token: JWT | null };
@@ -20,13 +21,15 @@ export default withAuth(
     callbacks: {
       authorized: async ({ req, token }) => {
         const pathname = req.nextUrl.pathname;
+        console.log(pathname, "pathName");
 
         if (
           pathname.startsWith("/_next") ||
           pathname.startsWith("/images") ||
           pathname === "/favicon.ico" ||
           pathname === "/__ENV.js" ||
-          authRoutes.includes(pathname)
+          authRoutes.includes(pathname) ||
+          apiPaths.includes(pathname)
         ) {
           return true;
         }
