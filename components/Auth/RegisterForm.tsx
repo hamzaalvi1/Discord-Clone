@@ -1,4 +1,5 @@
 "use client";
+import { AxiosError } from "axios";
 import { fetchAPI } from "@/utils";
 import { Button } from "../Button";
 import { InputField } from "../Input";
@@ -8,6 +9,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { ApiMethods } from "@/config/constants";
 import { AuthRoutes } from "@/config/api-routes";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { successLogger, errorLogger } from "../Toaster";
 import { registerSchema, RegisterUser } from "./ValidationSchema";
 
 const RegisterForm = () => {
@@ -15,6 +17,7 @@ const RegisterForm = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterUser>({
     resolver: zodResolver(registerSchema),
@@ -31,9 +34,16 @@ const RegisterForm = () => {
         url: AuthRoutes.REGISTER,
         data: values,
       });
-    } catch (error) {
-      console.log(error);
-    } finally {
+      if (response.status === 201) {
+        reset();
+        successLogger(response?.data?.message);
+        router.push("/login");
+      }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.log(error?.response?.data);
+        errorLogger(error?.response?.data?.message);
+      }
     }
   };
 
@@ -96,7 +106,7 @@ const RegisterForm = () => {
           fontWeight={"medium"}
           margin={{ base: "0 0", sm: "0 0 10px" }}
         >
-          Contine to create your account or click already have an account
+          Continue to create your account or click already have an account
         </Text>
         <Button
           title="Continue"
