@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import prismadb from "@/libs/prismadb";
 import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
@@ -24,23 +25,26 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        // This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = {
-          id: "42",
-          email: "hamza@h.com",
-          password: "click123",
-        };
+        const isUserExist = await prismadb.user.findUnique({
+          where: { email: credentials?.email },
+        });
 
-        if (
-          credentials?.email === user.email &&
-          credentials?.password === user.password
-        ) {
-          return user;
-        } else {
-          return null;
+        if (!credentials?.email || !credentials.password) {
+          throw new Error("Invalid credentials");
         }
+        if (!isUserExist) {
+          throw new Error("User does not exist");
+        }
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          isUserExist.password as string
+        );
+        if (!isCorrectPassword) {
+          throw new Error("Please enter a valid password");
+        }
+        const { password, ...user } = isUserExist;
+
+        return user;
       },
     }),
   ],
@@ -49,5 +53,5 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV != "production",
+  debug: true,
 };

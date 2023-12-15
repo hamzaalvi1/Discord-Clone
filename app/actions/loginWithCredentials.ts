@@ -19,11 +19,12 @@ export const loginWithCredentials = async (params: loginCredientialsParams) => {
       ...values,
       redirect: false,
     });
+    console.log(getCredentials, "credentials");
     if (getCredentials?.status == 200 && getCredentials?.ok) {
       successLogger("Logged in");
       return { success: true };
     } else if (getCredentials?.status == 401 && !getCredentials?.ok) {
-      errorLogger("Invalid credentials");
+      errorLogger(getCredentials?.error as string);
       return { success: false };
     }
     console.log(getCredentials, "getCredentials");
