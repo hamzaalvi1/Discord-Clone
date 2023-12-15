@@ -21,8 +21,6 @@ export default withAuth(
     callbacks: {
       authorized: async ({ req, token }) => {
         const pathname = req.nextUrl.pathname;
-        console.log(pathname, "pathName");
-
         if (
           pathname.startsWith("/_next") ||
           pathname.startsWith("/images") ||
