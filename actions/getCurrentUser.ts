@@ -2,7 +2,7 @@ import prismadb from "@/libs/prismadb";
 import { getSession } from "./getSession";
 import type { DefaultSession } from "next-auth";
 
-type currentUser = {
+export type currentUser = {
   id: string;
   name: string | null;
   password?: string | null;
