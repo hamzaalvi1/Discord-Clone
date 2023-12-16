@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Box, Text } from "@chakra-ui/react";
 import { loginSchema } from "./ValidationSchema";
-import { loginWithCredentials } from "@/app/actions";
+import { loginWithCredentials } from "@/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export type loginForm = {

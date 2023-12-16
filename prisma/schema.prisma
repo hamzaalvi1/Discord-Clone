@@ -21,6 +21,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   account       Account[]
   server        Server[]
+  Member        Member[]
 }
 
 model Account {
@@ -51,4 +52,23 @@ model Server {
   updatedAt  DateTime @updatedAt
   userId     String   @db.ObjectId
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Member     Member[]
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  role     MemberRole @default(GUEST)
+  serverId String     @db.ObjectId
+  server   Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId   String     @db.ObjectId
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
