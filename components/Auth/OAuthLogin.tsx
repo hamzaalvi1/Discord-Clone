@@ -3,12 +3,19 @@ import { Button } from "../Button";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import { Flex, Text } from "@chakra-ui/react";
 import { IoLogoGithub } from "react-icons/io5";
 
+type LoginType = "google" | "github" | "apple";
+
 const OAuthLogin = () => {
-  const router = useRouter();
+  const handleOAuthLogin = async (loginType: LoginType) => {
+    try {
+      const response = await signIn(loginType);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Flex as="div" flexFlow={"column"}>
       <Text
@@ -23,11 +30,7 @@ const OAuthLogin = () => {
         title="Login With Google"
         type="button"
         variant="oAuth"
-        handleClick={() =>
-          signIn("google", {
-            redirect: true,
-          })
-        }
+        handleClick={() => handleOAuthLogin("google")}
         leftIcon={
           <FcGoogle
             size={24}
