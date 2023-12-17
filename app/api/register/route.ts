@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import prismadb from "@/libs/prismadb";
+import { prismadb } from "@/libs/prismadb";
 import { normalizeZodError } from "@/utils";
 import { NextResponse, NextRequest } from "next/server";
 import { registerSchema } from "@/components/Auth/ValidationSchema";
