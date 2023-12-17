@@ -19,7 +19,6 @@ export const loginWithCredentials = async (params: loginCredientialsParams) => {
       ...values,
       redirect: false,
     });
-    console.log(getCredentials, "credentials");
     if (getCredentials?.status == 200 && getCredentials?.ok) {
       successLogger("Logged in");
       return { success: true };

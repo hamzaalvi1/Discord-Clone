@@ -1,12 +1,14 @@
 "use client";
 import { Button } from "../Button";
+import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
+import { Flex, Text } from "@chakra-ui/react";
 import { IoLogoGithub } from "react-icons/io5";
 
-import { Flex, Text } from "@chakra-ui/react";
-
 const OAuthLogin = () => {
+  const router = useRouter();
   return (
     <Flex as="div" flexFlow={"column"}>
       <Text
@@ -14,7 +16,6 @@ const OAuthLogin = () => {
         color={"lightGrey"}
         fontWeight={"medium"}
         mb={{ base: "0", sm: "5px" }}
-
       >
         OR
       </Text>
@@ -22,6 +23,11 @@ const OAuthLogin = () => {
         title="Login With Google"
         type="button"
         variant="oAuth"
+        handleClick={() =>
+          signIn("google", {
+            redirect: true,
+          })
+        }
         leftIcon={
           <FcGoogle
             size={24}

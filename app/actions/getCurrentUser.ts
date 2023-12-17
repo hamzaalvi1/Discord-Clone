@@ -1,4 +1,4 @@
-import prismadb from "@/libs/prismadb";
+import { prismadb } from "@/libs/prismadb";
 import { getSession } from "./getSession";
 import type { DefaultSession } from "next-auth";
 
@@ -8,7 +8,7 @@ export type currentUser = {
   password?: string | null;
   email: string | null;
   emailVerified: Date | null;
-  imageUrl: string | null;
+  image: string | null;
   createdAt: Date;
   updatedAt: Date;
 } | null;

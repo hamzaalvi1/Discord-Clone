@@ -16,12 +16,13 @@ model User {
   password      String?
   email         String?   @unique
   emailVerified DateTime?
-  imageUrl      String?   @db.String
+  image         String?   @db.String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  account       Account[]
+  accounts      Account[]
   server        Server[]
-  Member        Member[]
+  member        Member[]
+  sessions      Session[]
 }
 
 model Account {
@@ -41,6 +42,14 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Server {
