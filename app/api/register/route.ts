@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { prismadb } from "@/libs/prismadb";
 import { normalizeZodError } from "@/utils";
 import { NextResponse, NextRequest } from "next/server";

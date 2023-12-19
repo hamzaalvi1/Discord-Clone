@@ -41,13 +41,13 @@ export const authOptions: NextAuthOptions = {
         if (!isUserExist) {
           throw new Error("User does not exist");
         }
-        // const isCorrectPassword = await bcrypt.compare(
-        //   credentials.password,
-        //   isUserExist.password as string
-        // );
-        // if (!isCorrectPassword) {
-        //   throw new Error("Please enter a valid password");
-        // }
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          isUserExist.password as string
+        );
+        if (!isCorrectPassword) {
+          throw new Error("Please enter a valid password");
+        }
         const { password, ...user } = isUserExist;
 
         return user;
