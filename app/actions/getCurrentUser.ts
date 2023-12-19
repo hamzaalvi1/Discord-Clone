@@ -22,6 +22,5 @@ export const getCurrentUser = async () => {
     });
   }
   user?.password && delete user.password;
-
   return user;
 };
