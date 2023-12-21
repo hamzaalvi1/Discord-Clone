@@ -21,7 +21,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   server        Server[]
-  member        Member[]
+  members        Member[]
   sessions      Session[]
 }
 
@@ -61,7 +61,7 @@ model Server {
   updatedAt  DateTime @updatedAt
   userId     String   @db.ObjectId
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Member     Member[]
+  members     Member[]
 }
 
 enum MemberRole {
