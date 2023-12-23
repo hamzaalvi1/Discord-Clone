@@ -20,6 +20,7 @@ interface ModalProps {
     modalContentStyles?: CSSObject;
     overlayStyles?: CSSObject;
     titleStyles?: CSSObject;
+    headerDescStyles?: CSSObject;
   };
   children?: React.ReactNode;
   footerContent?: React.ReactNode;
@@ -27,6 +28,8 @@ interface ModalProps {
   isFooterEnabled?: boolean;
   isCentered?: boolean;
   motionPreset?: MotionPreset;
+  overlayOpacity?: string;
+  headerDescription?: string;
 }
 type MotionPreset =
   | "slideInBottom"
@@ -43,11 +46,13 @@ const Modal: React.FC<ModalProps> = (props) => {
     title,
     styleProps,
     children,
-    isFooterEnabled = false,
     footerContent,
     isCentered = true,
     motionPreset,
     size = "md",
+    overlayOpacity = "400",
+    headerDescription,
+    isFooterEnabled = false,
     ...rest
   } = props;
   return (
@@ -60,9 +65,12 @@ const Modal: React.FC<ModalProps> = (props) => {
       // onOverlayClick={false}
       {...rest}
     >
-      <ModalOverlay bg="blackAlpha.500" sx={styleProps?.overlayStyles} />
+      <ModalOverlay
+        bg={`blackAlpha.${overlayOpacity}`}
+        sx={styleProps?.overlayStyles}
+      />
       <ModalContent sx={styleProps?.modalContentStyles}>
-        <ModalHeader>
+        <ModalHeader padding={0}>
           <Text
             as={"h6"}
             fontWeight={"bold"}
@@ -72,6 +80,17 @@ const Modal: React.FC<ModalProps> = (props) => {
           >
             {title}
           </Text>
+          {headerDescription && (
+            <Text
+              as={"p"}
+              color={"gray.600"}
+              fontSize={"sm"}
+              fontWeight={"normal"}
+              sx={styleProps?.headerDescStyles}
+            >
+              {headerDescription}
+            </Text>
+          )}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>{children}</ModalBody>

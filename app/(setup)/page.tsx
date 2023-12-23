@@ -1,9 +1,8 @@
-import { Modal } from "@/components/Modal";
 import { prismadb } from "@/libs/prismadb";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/app/actions";
-import { modalContentStyles } from "./styles";
 import { ToggleMode } from "@/components/ToggleMode";
+import { ServerModal } from "@/components/SeverModal";
 const HomePage = async () => {
   const user = await getCurrentUser();
   const server = await prismadb.server.findFirst({
@@ -18,13 +17,6 @@ const HomePage = async () => {
   if (server?.id) {
     return redirect(`/servers/${server?.id}`);
   }
-  return (
-    <Modal
-      styleProps={{ modalContentStyles: modalContentStyles }}
-      title="Select Your Server"
-      isOpen={true}
-      size="lg"
-    />
-  );
+  return <ServerModal />  ;
 };
 export default HomePage;
