@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Modal as ChakraModal,
   ModalOverlay,
@@ -11,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CSSObject } from "@emotion/react";
-interface ModalProps {
+export interface ModalProps {
   title: string;
   isOpen: boolean;
   isFooter?: boolean;
@@ -21,6 +20,7 @@ interface ModalProps {
     overlayStyles?: CSSObject;
     titleStyles?: CSSObject;
     headerDescStyles?: CSSObject;
+    modalHeaderStyles?: CSSObject;
   };
   children?: React.ReactNode;
   footerContent?: React.ReactNode;
@@ -69,8 +69,10 @@ const Modal: React.FC<ModalProps> = (props) => {
         bg={`blackAlpha.${overlayOpacity}`}
         sx={styleProps?.overlayStyles}
       />
-      <ModalContent sx={styleProps?.modalContentStyles}>
-        <ModalHeader padding={0}>
+      <ModalContent
+        sx={{ borderRadius: "md", ...styleProps?.modalContentStyles }}
+      >
+        <ModalHeader padding={0} sx={styleProps?.modalHeaderStyles}>
           <Text
             as={"h6"}
             fontWeight={"bold"}
@@ -93,7 +95,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           )}
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
+        <ModalBody sx={{ padding: 0 }}>{children}</ModalBody>
         {isFooterEnabled && <ModalFooter>{footerContent}</ModalFooter>}
       </ModalContent>
     </ChakraModal>

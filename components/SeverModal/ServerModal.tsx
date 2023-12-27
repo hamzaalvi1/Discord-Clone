@@ -1,40 +1,51 @@
 "use client";
-import { Modal } from "../Modal";
-import { Button } from "../Button";
-import {
-  titleStyles,
-  modalContentStyles,
-  modalHeaderDescStyles,
-} from "./styles";
-import ServerSetupForm from "./ServerSetupForm";
+import { InputField } from "../Input";
+import { ModalForm } from "../ModalForm";
+import { useForm } from "react-hook-form";
+import { ModalFormConfig } from "../ModalForm/ModalForm";
+
+export type ServerSetupForm = {
+  imageUrl: string;
+  serverName: string;
+};
+
 const ServerModal = () => {
-  const submitButton = () => {
-    return (
-      <Button
-        title="Create"
-        type="submit"
-        loading={false}
-        margin={{ base: "10px 0", sm: "15px 0" }}
-      />
-    );
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting, isLoading },
+  } = useForm<ServerSetupForm>({
+    // resolver: zodResolver({}),
+  });
+  const onSubmit = (value: unknown) => {
+    console.log(value);
   };
+  const formConfig: ModalFormConfig[] = [
+    {
+      fieldType: "input",
+      placeholderText: "Enter Server Name",
+      name: "serverName",
+      type: "text",
+      labelText: "Server Name",
+    },
+  ];
   return (
-    <Modal
-      size="2xl"
+    <ModalForm
+      modalFormConfig={formConfig}
       isOpen={true}
-      overlayOpacity={"100"}
+      onSubmit={onSubmit}
       title="Customize your server"
-      isFooterEnabled={true}
-      headerDescription=" Give your server a personality with a name and an image. You can always change it later."
-      styleProps={{
-        titleStyles: titleStyles,
-        modalContentStyles: modalContentStyles,
-        headerDescStyles: modalHeaderDescStyles,
-      }}
-      footerContent={submitButton()}
+      headerDescription="Give your server a personality with a name and an image. You can always change it later"
     >
-      <ServerSetupForm />
-    </Modal>
+      <InputField
+        control={control}
+        error={errors["serverName"]?.message}
+        name="serverName"
+        type="text"
+        labelText="Server Name"
+        placeholder={"Enter Server Name"}
+      />
+    </ModalForm>
   );
 };
 

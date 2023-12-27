@@ -1,6 +1,7 @@
 import { prismadb } from "@/libs/prismadb";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/app/actions";
+import { ModalForm } from "@/components/ModalForm";
 import { ToggleMode } from "@/components/ToggleMode";
 import { ServerModal } from "@/components/SeverModal";
 const HomePage = async () => {
@@ -17,6 +18,6 @@ const HomePage = async () => {
   if (server?.id) {
     return redirect(`/servers/${server?.id}`);
   }
-  return <ServerModal />  ;
+  return <ServerModal />;
 };
 export default HomePage;
