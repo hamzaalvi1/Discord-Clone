@@ -21,7 +21,7 @@ import {
 
 interface InputFieldProps {
   name: string;
-  type: string;
+  type?: string;
   control: any;
   variant?: string;
   labelText?: string;

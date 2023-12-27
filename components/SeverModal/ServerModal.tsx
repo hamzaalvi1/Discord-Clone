@@ -28,6 +28,13 @@ const ServerModal = () => {
       type: "text",
       labelText: "Server Name",
     },
+    {
+      fieldType: "input",
+      placeholderText: "Enter Server Type",
+      name: "serverType",
+      type: "text",
+      labelText: "Server Type",
+    },
   ];
   return (
     <ModalForm
@@ -36,16 +43,7 @@ const ServerModal = () => {
       onSubmit={onSubmit}
       title="Customize your server"
       headerDescription="Give your server a personality with a name and an image. You can always change it later"
-    >
-      <InputField
-        control={control}
-        error={errors["serverName"]?.message}
-        name="serverName"
-        type="text"
-        labelText="Server Name"
-        placeholder={"Enter Server Name"}
-      />
-    </ModalForm>
+    />
   );
 };
 

@@ -1,9 +1,10 @@
 "use client";
 import { Button } from "../Button";
-import { Box, Flex } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/components/Modal";
+import { Box, Flex } from "@chakra-ui/react";
 import type { ModalProps } from "../Modal/Modal";
+import { ModalFormConfigHandler } from "@/hooks";
 import {
   titleStyles,
   modalFooterStyles,
@@ -32,9 +33,9 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
   const {
     title,
     isOpen,
-    children,
     onSubmit,
     size = "2xl",
+    modalFormConfig,
     headerDescription,
     overlayOpacity = "100",
   } = props;
@@ -60,7 +61,13 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
       <Box as="div">
         <form onSubmit={handleSubmit((values) => onSubmit(values))}>
           <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
-            {children}
+            {modalFormConfig.map((config, idx) => {
+              return (
+                <Box as="div" key={idx}>
+                  {ModalFormConfigHandler({ ...config, control })}
+                </Box>
+              );
+            })}
           </Box>
           <Flex as="div" sx={modalFooterStyles} justifyContent={"flex-end"}>
             <Button
