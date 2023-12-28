@@ -1,10 +1,12 @@
 "use client";
 import { Button } from "../Button";
-import { useForm } from "react-hook-form";
 import { Modal } from "@/components/Modal";
 import { Box, Flex } from "@chakra-ui/react";
 import type { ModalProps } from "../Modal/Modal";
+import { ZodFirstPartySchemaTypes, z } from "zod";
 import { ModalFormConfigHandler } from "@/hooks";
+import { useForm, FieldErrors } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   titleStyles,
   modalFooterStyles,
@@ -12,7 +14,6 @@ import {
   modalHeaderDescStyles,
   modalHeaderStyles,
 } from "./styles";
-
 export interface ModalFormConfig {
   fieldType: "input" | "select" | "uploadImg";
   placeholderText?: string;
@@ -27,6 +28,7 @@ interface ModalFormProps extends ModalProps {
   isOpen: boolean;
   onSubmit: (values: unknown) => void;
   modalFormConfig: ModalFormConfig[];
+  validationSchema: ZodFirstPartySchemaTypes;
 }
 
 const ModalForm: React.FC<ModalFormProps> = (props) => {
@@ -36,14 +38,19 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
     onSubmit,
     size = "2xl",
     modalFormConfig,
+    validationSchema: ValidationSchema,
     headerDescription,
     overlayOpacity = "100",
   } = props;
+  type ModalFormType = z.infer<typeof ValidationSchema>;
   const {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm<ModalFormType>({
+    resolver: zodResolver(ValidationSchema),
+  });
+
   return (
     <Modal
       size={size}
@@ -64,7 +71,7 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
             {modalFormConfig.map((config, idx) => {
               return (
                 <Box as="div" key={idx}>
-                  {ModalFormConfigHandler({ ...config, control })}
+                  {ModalFormConfigHandler({ ...config, control }, errors)}
                 </Box>
               );
             })}

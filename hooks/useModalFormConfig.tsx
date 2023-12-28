@@ -1,8 +1,12 @@
 import { InputField } from "@/components/Input";
 import { ModalConfig } from "@/config/constants";
+import { FieldErrors } from "react-hook-form";
 import type { ModalFormConfig } from "@/components/ModalForm/ModalForm";
 
-const ModalFormConfigHandler = (config: ModalFormConfig) => {
+const ModalFormConfigHandler = (
+  config: ModalFormConfig,
+  errors: FieldErrors | undefined
+) => {
   let fieldComponent;
 
   switch (config.fieldType) {

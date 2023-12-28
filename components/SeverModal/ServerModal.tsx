@@ -1,5 +1,5 @@
 "use client";
-import { InputField } from "../Input";
+import { z } from "zod";
 import { ModalForm } from "../ModalForm";
 import { useForm } from "react-hook-form";
 import { ModalFormConfig } from "../ModalForm/ModalForm";
@@ -36,6 +36,13 @@ const ServerModal = () => {
       labelText: "Server Type",
     },
   ];
+  const validationSchema = z.object({
+    serverName: z
+      .string()
+      .trim()
+      .min(1, { message: "Server Name is required" }),
+    imgUrl: z.string().trim().min(1, { message: "Server Name is required" }),
+  });
   return (
     <ModalForm
       modalFormConfig={formConfig}
@@ -43,6 +50,7 @@ const ServerModal = () => {
       onSubmit={onSubmit}
       title="Customize your server"
       headerDescription="Give your server a personality with a name and an image. You can always change it later"
+      validationSchema={validationSchema}
     />
   );
 };
