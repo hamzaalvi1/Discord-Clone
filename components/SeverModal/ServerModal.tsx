@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { ModalForm } from "../ModalForm";
 import { useForm } from "react-hook-form";
+import { ModalConfig } from "@/config/constants";
 import { ModalFormConfig } from "../ModalForm/ModalForm";
 
 export type ServerSetupForm = {
@@ -22,14 +23,14 @@ const ServerModal = () => {
   };
   const formConfig: ModalFormConfig[] = [
     {
-      fieldType: "input",
+      fieldType: ModalConfig.INPUT,
       placeholderText: "Enter Server Name",
       name: "serverName",
       type: "text",
       labelText: "Server Name",
     },
     {
-      fieldType: "input",
+      fieldType: ModalConfig.INPUT,
       placeholderText: "Enter Server Type",
       name: "serverType",
       type: "text",

@@ -71,7 +71,7 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
             {modalFormConfig.map((config, idx) => {
               return (
                 <Box as="div" key={idx}>
-                  {ModalFormConfigHandler({ ...config, control }, errors)}
+                  {ModalFormConfigHandler({ ...config, control, errors })}
                 </Box>
               );
             })}

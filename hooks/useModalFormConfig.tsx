@@ -1,34 +1,36 @@
 import { InputField } from "@/components/Input";
 import { ModalConfig } from "@/config/constants";
-import { FieldErrors } from "react-hook-form";
 import type { ModalFormConfig } from "@/components/ModalForm/ModalForm";
 
-const ModalFormConfigHandler = (
-  config: ModalFormConfig,
-  errors: FieldErrors | undefined
-) => {
+interface ModalHookFromConfig extends ModalFormConfig {
+  errors: any;
+}
+
+const ModalFormConfigHandler = (config: ModalHookFromConfig) => {
   let fieldComponent;
 
   switch (config.fieldType) {
     case ModalConfig.INPUT:
       fieldComponent = (
         <InputField
-          name={config.name}
-          type={config?.type}
-          control={config.control}
-          placeholder={config.placeholderText}
-          labelText={config.labelText}
+        name={config.name}
+        type={config?.type}
+        control={config.control}
+        labelText={config.labelText}
+        placeholder={config.placeholderText}
+        error={config?.errors[config.name]?.message}
         />
       );
 
     default:
       fieldComponent = (
         <InputField
-          name={config.name}
-          type={config?.type}
-          control={config.control}
-          placeholder={config.placeholderText}
-          labelText={config.labelText}
+        name={config.name}
+        type={config?.type}
+        control={config.control}
+        labelText={config.labelText}
+        placeholder={config.placeholderText}
+        error={config?.errors[config.name]?.message}
         />
       );
   }
