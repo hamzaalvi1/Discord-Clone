@@ -28,5 +28,5 @@ export const modalFooterStyles: CSSObject = {
   width: "100%",
   height: "100%",
   padding: "10px",
-  borderRadius: "0 0 10px 10px",
+  borderRadius: "0 0 5px 5px",
 };

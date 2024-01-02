@@ -70,7 +70,7 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
           <Box as="div" marginBlock={{ base: 0, sm: "10px" }}>
             {modalFormConfig.map((config, idx) => {
               return (
-                <Box as="div" key={idx}>
+                <Box as="div" key={idx} padding={"1.5rem"}>
                   {ModalFormConfigHandler({ ...config, control, errors })}
                 </Box>
               );

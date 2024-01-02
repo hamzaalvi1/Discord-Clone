@@ -53,7 +53,7 @@ const components = {
   Button,
 };
 const config = {
-  initialColorMode: "dark",
+  initialColorMode: "system",
   useSystemColorMode: true,
 };
 export const theme = extendTheme({

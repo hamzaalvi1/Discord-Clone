@@ -1,7 +1,6 @@
 "use client";
 import { z } from "zod";
 import { ModalForm } from "../ModalForm";
-import { useForm } from "react-hook-form";
 import { ModalConfig } from "@/config/constants";
 import { ModalFormConfig } from "../ModalForm/ModalForm";
 
@@ -11,13 +10,6 @@ export type ServerSetupForm = {
 };
 
 const ServerModal = () => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting, isLoading },
-  } = useForm<ServerSetupForm>({
-    // resolver: zodResolver({}),
-  });
   const onSubmit = (value: unknown) => {
     console.log(value);
   };
@@ -28,13 +20,6 @@ const ServerModal = () => {
       name: "serverName",
       type: "text",
       labelText: "Server Name",
-    },
-    {
-      fieldType: ModalConfig.INPUT,
-      placeholderText: "Enter Server Type",
-      name: "serverType",
-      type: "text",
-      labelText: "Server Type",
     },
   ];
   const validationSchema = z.object({
